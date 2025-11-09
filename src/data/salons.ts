@@ -1,4 +1,12 @@
 import { Salon } from "@/types/salon";
+import salon1 from "@/assets/salon-1.jpg";
+import salon2 from "@/assets/salon-2.jpg";
+import salon3 from "@/assets/salon-3.jpg";
+import salon4 from "@/assets/salon-4.jpg";
+import salon5 from "@/assets/salon-5.jpg";
+import salon6 from "@/assets/salon-6.jpg";
+import salon7 from "@/assets/salon-7.jpg";
+import salon8 from "@/assets/salon-8.jpg";
 
 export const salons: Salon[] = [
   {
@@ -10,6 +18,7 @@ export const salons: Salon[] = [
     priceRange: "€€€",
     phone: "+49 6221 123456",
     website: "https://salon-elegance.de",
+    image: salon1,
     coordinates: {
       lat: 49.4093,
       lng: 8.6943,
@@ -28,27 +37,28 @@ export const salons: Salon[] = [
   },
   {
     id: "2",
-    name: "Haar & Stil",
+    name: "Barber & Gentlemen",
     address: "Bergheimer Str. 45, 69121 Heidelberg",
-    rating: 4.6,
-    reviewCount: 89,
+    rating: 4.7,
+    reviewCount: 142,
     priceRange: "€€",
     phone: "+49 6221 234567",
+    image: salon2,
     coordinates: {
       lat: 49.4123,
       lng: 8.6876,
     },
     openingHours: [
-      { day: "monday", hours: "closed_day" },
-      { day: "tuesday", hours: "09:00 - 18:00" },
-      { day: "wednesday", hours: "09:00 - 18:00" },
-      { day: "thursday", hours: "09:00 - 19:00" },
-      { day: "friday", hours: "09:00 - 19:00" },
-      { day: "saturday", hours: "08:00 - 15:00" },
+      { day: "monday", hours: "10:00 - 19:00" },
+      { day: "tuesday", hours: "10:00 - 19:00" },
+      { day: "wednesday", hours: "10:00 - 19:00" },
+      { day: "thursday", hours: "10:00 - 20:00" },
+      { day: "friday", hours: "10:00 - 20:00" },
+      { day: "saturday", hours: "09:00 - 18:00" },
       { day: "sunday", hours: "closed_day" },
     ],
-    isOpen: false,
-    specialties: ["Cuts", "Beard Trimming", "Men's Grooming"],
+    isOpen: true,
+    specialties: ["Beard Trimming", "Hot Towel Shave", "Men's Grooming"],
   },
   {
     id: "3",
@@ -59,6 +69,7 @@ export const salons: Salon[] = [
     priceRange: "€€€€",
     phone: "+49 6221 345678",
     website: "https://beautyhair-hd.de",
+    image: salon3,
     coordinates: {
       lat: 49.4156,
       lng: 8.6912,
@@ -77,12 +88,13 @@ export const salons: Salon[] = [
   },
   {
     id: "4",
-    name: "Schnitt & Farbe",
+    name: "Natur Haar Bio Salon",
     address: "Vangerowstraße 12, 69121 Heidelberg",
-    rating: 4.5,
-    reviewCount: 73,
+    rating: 4.6,
+    reviewCount: 98,
     priceRange: "€€",
     phone: "+49 6221 456789",
+    image: salon4,
     coordinates: {
       lat: 49.4078,
       lng: 8.6898,
@@ -97,6 +109,108 @@ export const salons: Salon[] = [
       { day: "sunday", hours: "closed_day" },
     ],
     isOpen: true,
-    specialties: ["Balayage", "Natural Colors", "Eco-Friendly"],
+    specialties: ["Organic Products", "Natural Colors", "Eco-Friendly"],
+  },
+  {
+    id: "5",
+    name: "Modern Cut Studio",
+    address: "Rohrbacher Str. 33, 69121 Heidelberg",
+    rating: 4.5,
+    reviewCount: 84,
+    priceRange: "€€",
+    phone: "+49 6221 567890",
+    website: "https://moderncut-hd.de",
+    image: salon5,
+    coordinates: {
+      lat: 49.4067,
+      lng: 8.6921,
+    },
+    openingHours: [
+      { day: "monday", hours: "closed_day" },
+      { day: "tuesday", hours: "10:00 - 19:00" },
+      { day: "wednesday", hours: "10:00 - 19:00" },
+      { day: "thursday", hours: "10:00 - 20:00" },
+      { day: "friday", hours: "10:00 - 20:00" },
+      { day: "saturday", hours: "09:00 - 17:00" },
+      { day: "sunday", hours: "closed_day" },
+    ],
+    isOpen: false,
+    specialties: ["Modern Styles", "Unisex", "Color Specialist"],
+  },
+  {
+    id: "6",
+    name: "Klassik Herrenfriseur",
+    address: "Brückenstraße 7, 69121 Heidelberg",
+    rating: 4.8,
+    reviewCount: 167,
+    priceRange: "€€",
+    phone: "+49 6221 678901",
+    image: salon6,
+    coordinates: {
+      lat: 49.4112,
+      lng: 8.6889,
+    },
+    openingHours: [
+      { day: "monday", hours: "08:00 - 18:00" },
+      { day: "tuesday", hours: "08:00 - 18:00" },
+      { day: "wednesday", hours: "08:00 - 18:00" },
+      { day: "thursday", hours: "08:00 - 19:00" },
+      { day: "friday", hours: "08:00 - 19:00" },
+      { day: "saturday", hours: "08:00 - 15:00" },
+      { day: "sunday", hours: "closed_day" },
+    ],
+    isOpen: true,
+    specialties: ["Traditional Cuts", "Classic Styling", "Senior Friendly"],
+  },
+  {
+    id: "7",
+    name: "Urban Hair Loft",
+    address: "Poststraße 19, 69121 Heidelberg",
+    rating: 4.7,
+    reviewCount: 112,
+    priceRange: "€€€",
+    phone: "+49 6221 789012",
+    website: "https://urbanhair-loft.de",
+    image: salon7,
+    coordinates: {
+      lat: 49.4089,
+      lng: 8.6956,
+    },
+    openingHours: [
+      { day: "monday", hours: "10:00 - 19:00" },
+      { day: "tuesday", hours: "10:00 - 19:00" },
+      { day: "wednesday", hours: "10:00 - 19:00" },
+      { day: "thursday", hours: "10:00 - 21:00" },
+      { day: "friday", hours: "10:00 - 21:00" },
+      { day: "saturday", hours: "09:00 - 18:00" },
+      { day: "sunday", hours: "closed_day" },
+    ],
+    isOpen: true,
+    specialties: ["Trend Styling", "Balayage Expert", "Creative Colors"],
+  },
+  {
+    id: "8",
+    name: "Familie Haar Salon",
+    address: "Mönchhofstraße 25, 69121 Heidelberg",
+    rating: 4.4,
+    reviewCount: 76,
+    priceRange: "€",
+    phone: "+49 6221 890123",
+    image: salon8,
+    coordinates: {
+      lat: 49.4101,
+      lng: 8.6867,
+    },
+    openingHours: [
+      { day: "monday", hours: "09:00 - 18:00" },
+      { day: "tuesday", hours: "09:00 - 18:00" },
+      { day: "wednesday", hours: "09:00 - 18:00" },
+      { day: "thursday", hours: "09:00 - 18:00" },
+      { day: "friday", hours: "09:00 - 18:00" },
+      { day: "saturday", hours: "08:00 - 15:00" },
+      { day: "sunday", hours: "closed_day" },
+    ],
+    isOpen: true,
+    specialties: ["Kids Cuts", "Family Friendly", "Affordable Prices"],
   },
 ];

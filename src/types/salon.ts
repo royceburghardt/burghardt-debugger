@@ -12,6 +12,7 @@ export interface Salon {
   priceRange: string;
   phone: string;
   website?: string;
+  image: string;
   coordinates: {
     lat: number;
     lng: number;

@@ -18,14 +18,24 @@ export const SalonCard = ({ salon, onViewMap }: SalonCardProps) => {
   };
 
   return (
-    <Card className="overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300">
+    <Card className="overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 group">
+      <div className="relative h-48 overflow-hidden">
+        <img
+          src={salon.image}
+          alt={salon.name}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent" />
+        <Badge
+          variant={salon.isOpen ? "default" : "secondary"}
+          className="absolute top-4 right-4 shadow-lg"
+        >
+          {salon.isOpen ? t("openNow") : t("closed")}
+        </Badge>
+      </div>
+
       <CardHeader className="space-y-2">
-        <div className="flex items-start justify-between">
-          <h3 className="text-xl font-semibold">{salon.name}</h3>
-          <Badge variant={salon.isOpen ? "default" : "secondary"}>
-            {salon.isOpen ? t("openNow") : t("closed")}
-          </Badge>
-        </div>
+        <h3 className="text-xl font-semibold">{salon.name}</h3>
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
             <Star className="h-4 w-4 fill-accent text-accent" />

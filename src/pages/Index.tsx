@@ -21,9 +21,9 @@ const Index = () => {
 
       <section className="container py-12 md:py-16">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">Hair Salons in Heidelberg 69121</h2>
+          <h2 className="text-3xl font-bold mb-2">Hair Salons & Barber Shops in Heidelberg 69121</h2>
           <p className="text-muted-foreground">
-            {salons.length} professional hair salons available
+            {salons.length} professional hair salons and barber shops available
           </p>
         </div>
 
