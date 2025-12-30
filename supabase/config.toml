@@ -1,0 +1,4 @@
+project_id = "gtcylupidjecsimptevq"
+
+[functions.debug-analyze]
+verify_jwt = false

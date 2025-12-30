@@ -2,47 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Burghardt Debugger Design System - Dark Developer Theme */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 215 25% 27%;
+    --background: 220 20% 97%;
+    --foreground: 220 30% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 27%;
+    --card-foreground: 220 30% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 27%;
+    --popover-foreground: 220 30% 15%;
 
-    --primary: 185 84% 35%;
+    --primary: 142 70% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 185 20% 96%;
-    --secondary-foreground: 185 84% 35%;
+    --secondary: 220 15% 92%;
+    --secondary-foreground: 220 30% 20%;
 
-    --muted: 185 20% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 220 15% 92%;
+    --muted-foreground: 220 15% 45%;
 
-    --accent: 14 88% 63%;
+    --accent: 262 80% 60%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 185 20% 90%;
-    --input: 185 20% 90%;
-    --ring: 185 84% 35%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
 
-    --radius: 0.75rem;
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
 
-    --hero-gradient-from: 185 84% 35%;
-    --hero-gradient-to: 185 70% 50%;
-    
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --border: 220 15% 85%;
+    --input: 220 15% 85%;
+    --ring: 142 70% 45%;
+
+    --radius: 0.5rem;
+
+    --code-bg: 220 20% 95%;
+    --code-border: 220 15% 85%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -55,48 +56,51 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 215 28% 12%;
-    --foreground: 0 0% 98%;
+    --background: 220 25% 8%;
+    --foreground: 220 15% 95%;
 
-    --card: 215 25% 17%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 25% 12%;
+    --card-foreground: 220 15% 95%;
 
-    --popover: 215 25% 17%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 25% 12%;
+    --popover-foreground: 220 15% 95%;
 
-    --primary: 185 84% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 142 70% 50%;
+    --primary-foreground: 220 25% 8%;
 
-    --secondary: 215 25% 20%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 220 25% 18%;
+    --secondary-foreground: 220 15% 85%;
 
-    --muted: 215 25% 20%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 220 25% 18%;
+    --muted-foreground: 220 15% 55%;
 
-    --accent: 14 88% 63%;
+    --accent: 262 80% 65%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 215 25% 22%;
-    --input: 215 25% 22%;
-    --ring: 185 84% 45%;
+    --warning: 38 92% 55%;
+    --warning-foreground: 0 0% 10%;
 
-    --hero-gradient-from: 185 84% 45%;
-    --hero-gradient-to: 185 70% 60%;
+    --success: 142 70% 50%;
+    --success-foreground: 0 0% 10%;
 
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-    --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    --border: 220 25% 20%;
+    --input: 220 25% 20%;
+    --ring: 142 70% 50%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --code-bg: 220 25% 10%;
+    --code-border: 220 25% 18%;
+
+    --sidebar-background: 220 25% 10%;
+    --sidebar-foreground: 220 15% 90%;
+    --sidebar-primary: 142 70% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 220 25% 15%;
+    --sidebar-accent-foreground: 220 15% 90%;
+    --sidebar-border: 220 25% 18%;
+    --sidebar-ring: 142 70% 50%;
   }
 }
 
@@ -106,6 +110,25 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Menlo', monospace;
+  }
+
+  code, pre {
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Menlo', monospace;
+  }
+}
+
+@layer utilities {
+  .code-block {
+    @apply bg-[hsl(var(--code-bg))] border border-[hsl(var(--code-border))] rounded-md p-4 font-mono text-sm overflow-x-auto;
+  }
+
+  .terminal-glow {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.15);
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
   }
 }

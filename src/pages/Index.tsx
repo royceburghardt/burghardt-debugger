@@ -1,49 +1,61 @@
-import { useState } from "react";
-import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
-import { SalonCard } from "@/components/SalonCard";
-import { Map } from "@/components/Map";
-import { salons } from "@/data/salons";
-import { Salon } from "@/types/salon";
+import { DebuggerHeader } from "@/components/debugger/DebuggerHeader";
+import { CodeInput, DebugType } from "@/components/debugger/CodeInput";
+import { ResultDisplay } from "@/components/debugger/ResultDisplay";
+import { useDebugger } from "@/hooks/useDebugger";
+import { Bug, Zap, Shield, Sparkles } from "lucide-react";
 
 const Index = () => {
-  const [selectedSalon, setSelectedSalon] = useState<Salon | null>(null);
+  const { result, isLoading, isStreaming, analyze } = useDebugger();
 
-  const handleViewMap = (salon: Salon) => {
-    setSelectedSalon(salon);
-    document.getElementById("map-section")?.scrollIntoView({ behavior: "smooth" });
+  const handleSubmit = (type: DebugType, content: string, language?: string) => {
+    analyze(type, content, language);
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      <Hero />
-
-      <section className="container py-12 md:py-16">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">Hair Salons & Barber Shops in Heidelberg 69121</h2>
-          <p className="text-muted-foreground">
-            {salons.length} professional hair salons and barber shops available
+      <DebuggerHeader />
+      
+      <main className="container py-8 space-y-8">
+        <section className="text-center space-y-4 pb-8">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+            <span className="gradient-primary bg-clip-text text-transparent">
+              Burghardt Debugger
+            </span>
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            AI-powered debugging assistant that analyzes code, parses error logs, 
+            explains stack traces, and provides comprehensive code reviews.
           </p>
+          
+          <div className="flex flex-wrap justify-center gap-4 pt-4">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-sm">
+              <Bug className="h-4 w-4 text-primary" />
+              Bug Detection
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-sm">
+              <Zap className="h-4 w-4 text-warning" />
+              Real-time Analysis
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-sm">
+              <Shield className="h-4 w-4 text-destructive" />
+              Security Scanning
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-sm">
+              <Sparkles className="h-4 w-4 text-accent" />
+              AI Suggestions
+            </div>
+          </div>
+        </section>
+
+        <div className="grid gap-8 lg:grid-cols-2">
+          <CodeInput onSubmit={handleSubmit} isLoading={isLoading} />
+          <ResultDisplay result={result} isStreaming={isStreaming} />
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 mb-12">
-          {salons.map((salon) => (
-            <SalonCard key={salon.id} salon={salon} onViewMap={handleViewMap} />
-          ))}
-        </div>
-
-        <div id="map-section" className="mt-12">
-          <h2 className="text-3xl font-bold mb-6">Map View</h2>
-          <Map salons={salons} selectedSalon={selectedSalon} />
-        </div>
-      </section>
-
-      <footer className="border-t py-8 mt-16">
-        <div className="container text-center text-muted-foreground">
-          <p>&copy; 2024 Hair Dresser Close to Me. All rights reserved.</p>
-        </div>
-      </footer>
+        <footer className="text-center text-sm text-muted-foreground pt-8 border-t border-border">
+          <p>Powered by advanced AI models • Supports multiple programming languages</p>
+        </footer>
+      </main>
     </div>
   );
 };
