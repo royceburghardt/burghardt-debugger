@@ -41,22 +41,22 @@ export const ResultDisplay = ({ result, isStreaming }: ResultDisplayProps) => {
 
   if (!result && !isStreaming) {
     return (
-      <Card className="card-glow h-full">
+      <Card className="card-glow h-full border-2 border-dashed border-violet-500/20">
         <CardContent className="p-6 h-full flex flex-col items-center justify-center text-center min-h-[400px]">
           <div className="relative mb-6">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center floating">
-              <Terminal className="h-10 w-10 text-primary" />
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center floating shadow-xl shadow-violet-500/30">
+              <Terminal className="h-10 w-10 text-white" />
             </div>
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-xl bg-accent/20 flex items-center justify-center">
-              <Sparkles className="h-4 w-4 text-accent" />
+            <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg">
+              <Sparkles className="h-4 w-4 text-white" />
             </div>
           </div>
-          <h3 className="text-xl font-semibold mb-2">Ready to Analyze</h3>
+          <h3 className="text-xl font-semibold mb-2 bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">Ready to Analyze</h3>
           <p className="text-muted-foreground text-sm max-w-xs">
             Paste your code, logs, or stack traces on the left and click analyze to get AI-powered insights.
           </p>
-          <div className="flex items-center gap-2 mt-6 text-xs text-muted-foreground">
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+          <div className="flex items-center gap-2 mt-6 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-medium">
+            <span className="w-2 h-2 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 animate-pulse" />
             AI is standing by
           </div>
         </CardContent>
@@ -65,18 +65,18 @@ export const ResultDisplay = ({ result, isStreaming }: ResultDisplayProps) => {
   }
 
   return (
-    <Card className="card-glow overflow-hidden">
-      <div className="flex items-center justify-between p-4 border-b border-border bg-secondary/30">
+    <Card className="card-glow overflow-hidden border-2">
+      <div className="flex items-center justify-between p-4 border-b border-border bg-gradient-to-r from-violet-500/5 to-purple-500/5">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10">
-            <Terminal className="h-5 w-5 text-primary" />
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25">
+            <Terminal className="h-5 w-5 text-white" />
           </div>
           <div>
             <h3 className="font-semibold flex items-center gap-2">
-              Analysis Result
+              <span className="bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">Analysis Result</span>
               {isStreaming && (
-                <span className="inline-flex items-center gap-1.5 text-xs font-normal text-accent">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                <span className="inline-flex items-center gap-1.5 text-xs font-normal px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   Streaming
                 </span>
               )}

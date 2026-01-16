@@ -37,36 +37,40 @@ const tabConfig = {
     title: "Code Analysis",
     description: "Find bugs, security issues & get improvement suggestions",
     placeholder: "Paste your code here for analysis...\n\nExample:\nfunction calculateTotal(items) {\n  let total = 0;\n  for (i = 0; i < items.length; i++) {\n    total += items[i].price;\n  }\n  return total;\n}",
-    color: "text-primary",
-    bgColor: "bg-primary/10",
-    borderColor: "border-primary/20",
+    gradient: "from-violet-500 to-purple-600",
+    bgColor: "bg-violet-500/10",
+    textColor: "text-violet-600 dark:text-violet-400",
+    borderColor: "border-violet-500/30",
   },
   logs: {
     icon: FileText,
     title: "Log Parser",
     description: "Get explanations and debugging recommendations",
     placeholder: "Paste your error logs here...\n\nExample:\n[ERROR] 2024-01-15 10:23:45 - Connection refused to database\n[WARN] 2024-01-15 10:23:46 - Retrying connection (attempt 1/3)\n[ERROR] 2024-01-15 10:23:47 - Max retries exceeded",
-    color: "text-warning",
-    bgColor: "bg-warning/10",
-    borderColor: "border-warning/20",
+    gradient: "from-amber-500 to-orange-600",
+    bgColor: "bg-amber-500/10",
+    textColor: "text-amber-600 dark:text-amber-400",
+    borderColor: "border-amber-500/30",
   },
   stacktrace: {
     icon: AlertTriangle,
     title: "Stack Trace Explainer",
     description: "Plain-language explanation of errors",
     placeholder: "Paste your stack trace here...\n\nExample:\nTypeError: Cannot read property 'map' of undefined\n    at UserList.render (UserList.tsx:15:20)\n    at renderWithHooks (react-dom.js:1234:22)\n    at mountIndeterminateComponent (react-dom.js:5678:12)",
-    color: "text-destructive",
-    bgColor: "bg-destructive/10",
-    borderColor: "border-destructive/20",
+    gradient: "from-rose-500 to-pink-600",
+    bgColor: "bg-rose-500/10",
+    textColor: "text-rose-600 dark:text-rose-400",
+    borderColor: "border-rose-500/30",
   },
   review: {
     icon: Search,
     title: "Code Review",
     description: "Quality assessment & refactoring suggestions",
     placeholder: "Paste your code here for a comprehensive review...\n\nWe'll analyze:\n• Code quality and readability\n• Design patterns and architecture\n• Error handling and edge cases\n• Naming conventions\n• Potential improvements",
-    color: "text-accent",
-    bgColor: "bg-accent/10",
-    borderColor: "border-accent/20",
+    gradient: "from-emerald-500 to-teal-600",
+    bgColor: "bg-emerald-500/10",
+    textColor: "text-emerald-600 dark:text-emerald-400",
+    borderColor: "border-emerald-500/30",
   },
 };
 
@@ -84,10 +88,10 @@ export const CodeInput = ({ onSubmit, isLoading }: CodeInputProps) => {
   const Icon = currentConfig.icon;
 
   return (
-    <Card className="card-glow overflow-hidden">
+    <Card className="card-glow overflow-hidden border-2">
       <CardContent className="p-0">
         {/* Tab Selection */}
-        <div className="grid grid-cols-4 border-b border-border">
+        <div className="grid grid-cols-4 border-b border-border bg-secondary/30">
           {(Object.entries(tabConfig) as [DebugType, typeof currentConfig][]).map(([key, config]) => {
             const TabIcon = config.icon;
             const isActive = activeTab === key;
@@ -96,17 +100,16 @@ export const CodeInput = ({ onSubmit, isLoading }: CodeInputProps) => {
                 key={key}
                 onClick={() => setActiveTab(key)}
                 className={`
-                  relative flex flex-col items-center gap-1.5 p-4 transition-all duration-200
-                  ${isActive ? config.bgColor : 'hover:bg-secondary/50'}
+                  relative flex flex-col items-center gap-1.5 p-4 transition-all duration-300
+                  ${isActive ? `${config.bgColor} ${config.borderColor} border-b-2` : 'hover:bg-secondary/50 border-b-2 border-transparent'}
                 `}
               >
-                <TabIcon className={`h-5 w-5 transition-colors ${isActive ? config.color : 'text-muted-foreground'}`} />
-                <span className={`text-xs font-medium transition-colors hidden sm:block ${isActive ? 'text-foreground' : 'text-muted-foreground'}`}>
+                <div className={`p-1.5 rounded-lg transition-all duration-300 ${isActive ? `bg-gradient-to-br ${config.gradient} shadow-lg` : ''}`}>
+                  <TabIcon className={`h-4 w-4 transition-colors ${isActive ? 'text-white' : 'text-muted-foreground'}`} />
+                </div>
+                <span className={`text-xs font-medium transition-colors hidden sm:block ${isActive ? config.textColor : 'text-muted-foreground'}`}>
                   {config.title.split(' ')[0]}
                 </span>
-                {isActive && (
-                  <div className={`absolute bottom-0 left-0 right-0 h-0.5 ${config.bgColor.replace('/10', '')}`} />
-                )}
               </button>
             );
           })}
@@ -115,11 +118,11 @@ export const CodeInput = ({ onSubmit, isLoading }: CodeInputProps) => {
         <div className="p-6 space-y-5">
           {/* Header */}
           <div className="flex items-start gap-4">
-            <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${currentConfig.bgColor} ${currentConfig.borderColor} border`}>
-              <Icon className={`h-6 w-6 ${currentConfig.color}`} />
+            <div className={`flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${currentConfig.gradient} shadow-lg`}>
+              <Icon className="h-6 w-6 text-white" />
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-lg">{currentConfig.title}</h3>
+              <h3 className={`font-semibold text-lg ${currentConfig.textColor}`}>{currentConfig.title}</h3>
               <p className="text-sm text-muted-foreground">{currentConfig.description}</p>
             </div>
           </div>
@@ -172,7 +175,7 @@ export const CodeInput = ({ onSubmit, isLoading }: CodeInputProps) => {
               onClick={handleSubmit}
               disabled={!content.trim() || isLoading}
               size="lg"
-              className="gap-2 rounded-xl px-6 gradient-primary hover:opacity-90 transition-opacity shadow-lg"
+              className={`gap-2 rounded-xl px-6 bg-gradient-to-r ${currentConfig.gradient} hover:opacity-90 transition-all shadow-lg text-white border-0`}
             >
               {isLoading ? (
                 <>
