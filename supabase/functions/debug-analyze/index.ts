@@ -1,10 +1,31 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+// ============================================
+// SECURITY CONFIGURATION
+// ============================================
+// Note: verify_jwt is set to false in config.toml because Lovable Cloud
+// uses signing-keys which requires manual JWT validation via getClaims().
+// This is the recommended pattern - DO NOT remove the authentication code below.
+// ============================================
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// Input validation constants
+const MAX_CONTENT_LENGTH = 50000; // 50KB - reasonable limit for code analysis
+const VALID_TYPES = ['analyze', 'logs', 'stacktrace', 'review'] as const;
+const VALID_LANGUAGES = [
+  'JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'C#',
+  'Go', 'Rust', 'PHP', 'Ruby', 'Swift', 'Kotlin', 'SQL',
+  'HTML/CSS', 'Shell/Bash', 'Other'
+] as const;
+
+type DebugType = typeof VALID_TYPES[number];
+type Language = typeof VALID_LANGUAGES[number];
+
 const systemPrompts = {
   analyze: `You are an expert code analyzer and debugger. Your task is to analyze code for:
 - Bugs and potential errors
@@ -74,7 +95,9 @@ serve(async (req) => {
   }
 
   try {
-    // Validate authentication
+    // ============================================
+    // AUTHENTICATION (Required - do not remove)
+    // ============================================
     const authHeader = req.headers.get("Authorization");
     if (!authHeader?.startsWith("Bearer ")) {
       console.error("Missing or invalid Authorization header");
@@ -105,23 +128,67 @@ serve(async (req) => {
     const userId = claimsData.claims.sub;
     console.log(`Authenticated request from user: ${userId}`);
 
-    const { type, content, language } = await req.json();
-
-    if (!type || !content) {
+    // ============================================
+    // INPUT VALIDATION
+    // ============================================
+    let requestBody;
+    try {
+      requestBody = await req.json();
+    } catch {
+      console.error("Invalid JSON in request body");
       return new Response(
-        JSON.stringify({ error: "Missing 'type' or 'content' in request body" }),
+        JSON.stringify({ error: "Invalid JSON in request body" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    const systemPrompt = systemPrompts[type as keyof typeof systemPrompts];
-    if (!systemPrompt) {
+    const { type, content, language } = requestBody;
+
+    // Validate type parameter
+    if (!type || typeof type !== 'string' || !VALID_TYPES.includes(type as DebugType)) {
+      console.error(`Invalid type parameter: ${type}`);
       return new Response(
         JSON.stringify({ error: "Invalid type. Use: analyze, logs, stacktrace, or review" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
+    // Validate content parameter - must be non-empty string
+    if (!content || typeof content !== 'string') {
+      console.error("Content must be a non-empty string");
+      return new Response(
+        JSON.stringify({ error: "Content must be a non-empty string" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Validate content length to prevent resource exhaustion
+    if (content.length > MAX_CONTENT_LENGTH) {
+      console.error(`Content too large: ${content.length} characters (max: ${MAX_CONTENT_LENGTH})`);
+      return new Response(
+        JSON.stringify({ 
+          error: `Content too large. Maximum ${MAX_CONTENT_LENGTH} characters allowed. Current: ${content.length}` 
+        }),
+        { status: 413, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Validate language parameter if provided
+    if (language !== undefined && language !== null) {
+      if (typeof language !== 'string' || !VALID_LANGUAGES.includes(language as Language)) {
+        console.error(`Invalid language parameter: ${language}`);
+        return new Response(
+          JSON.stringify({ error: "Invalid language parameter" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+    }
+
+    const systemPrompt = systemPrompts[type as DebugType];
+
+    // ============================================
+    // AI PROCESSING
+    // ============================================
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       console.error("LOVABLE_API_KEY is not configured");
@@ -135,7 +202,7 @@ serve(async (req) => {
       ? `Language: ${language}\n\nCode/Content:\n\`\`\`\n${content}\n\`\`\``
       : `Content:\n\`\`\`\n${content}\n\`\`\``;
 
-    console.log(`Processing ${type} request for content length: ${content.length}`);
+    console.log(`Processing ${type} request for user ${userId}, content length: ${content.length}`);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -181,7 +248,7 @@ serve(async (req) => {
   } catch (error) {
     console.error("Debug function error:", error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }),
+      JSON.stringify({ error: "An unexpected error occurred" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
