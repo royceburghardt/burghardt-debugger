@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import type { DebugType } from "@/components/debugger/CodeInput";
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/debug-analyze`;
@@ -16,11 +17,23 @@ export const useDebugger = () => {
     setResult("");
 
     try {
+      // Get authenticated user's session
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to use the debugger.",
+          variant: "destructive",
+        });
+        throw new Error("Authentication required");
+      }
+
       const response = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({ type, content, language }),
       });
